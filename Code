@@ -1,0 +1,55 @@
+import random
+
+def simulate_martingale(start_bank, base_bet, spins, pocket_type):
+    if pocket_type == 'european':
+        red_prob = 18/37
+    elif pocket_type == 'american':
+        red_prob = 18/38
+    else:
+        red_prob = 18/37
+
+    bank = start_bank
+    current_bet = base_bet
+    wins = 0
+    losses = 0
+
+    for _ in range(spins):
+        if bank <= 0:
+            break
+
+        stake = min(current_bet, bank)
+        bank -= stake
+        is_red = random.random() < red_prob
+
+        if is_red:
+            bank += stake * 2
+            wins += 1
+            current_bet = base_bet
+        else:
+            losses += 1
+            current_bet = stake * 2
+
+    return wins, losses, bank
+
+
+def simulate_martingale_interactive():
+    try:
+        start_bank = float(input("Starting bank (e.g. 1000): ") or 1000)
+        base_bet = float(input("Base bet (e.g. 10): ") or 10)
+        spins = int(input("Number of spins per run (e.g. 1000): ") or 1000)
+        pocket_type = input("Roulette type (european/american) [default: european]: ").strip().lower() or "european"
+        runs = int(input("Number of runs (e.g. 5): ") or 1)
+    except ValueError:
+        print("Invalid input, please enter numbers for bank/bet/spins.")
+        return
+
+    print("\n--- RESULTS PER RUN ---")
+    for i in range(1, runs + 1):
+        wins, losses, final_bank = simulate_martingale(start_bank, base_bet, spins, pocket_type)
+        print(f"\nRun {i}:")
+        print(f"Wins: {wins}")
+        print(f"Losses: {losses}")
+        print(f"Final bank: {final_bank:.2f}")
+
+
+simulate_martingale_interactive()
