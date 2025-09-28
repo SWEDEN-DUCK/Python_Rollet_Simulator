@@ -1,0 +1,1 @@
+I made this simulator that doubles the original bet if you lose until you win. If you win, it restarts and does it as many times as you want. It always places the bet on red and tries to win several times over. If you liked this little project that I did at 00:00 please give me a star and if you want to expand the project, you can.
