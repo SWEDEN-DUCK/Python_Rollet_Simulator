@@ -76,4 +76,15 @@ def run_interactive_simulation():
     print(f"Profitable runs: {len(profitable_runs)} out of {simulation_runs}")
     print(f"Success rate: {(len(profitable_runs)/simulation_runs)*100:.1f}%")
     
-    if profitable_ru_
+    if profitable_runs:
+        most_profitable = max(profitable_runs, key=lambda x: x[3])
+        print(f"Best performance: Run #{most_profitable[0]} ending with ${most_profitable[3]:.2f}")
+    else:
+        print("Unfortunately, no simulations ended profitably.")
+    
+    avg_final = sum(result[3] for result in all_results) / len(all_results)
+    print(f"Average final balance: ${avg_final:.2f}")
+
+
+if __name__ == "__main__":
+    run_interactive_simulation()
